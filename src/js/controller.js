@@ -2,6 +2,7 @@ import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import { async } from 'regenerator-runtime';
 
 // https://forkify-api.herokuapp.com/v2
 
@@ -19,10 +20,18 @@ const controlRecipes = async function () {
     // 2) Render Recipe
     recipeView.render(model.state.recipe);
   } catch (err) {
-    console.error(err);
+    recipeView.renderError();
   }
 };
 
+const controlSearchResults = async function (query) {
+  try {
+    await model.loadSearchResults(query);
+  } catch (err) {
+    console.log(err);
+  }
+};
+controlSearchResults('pizza');
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
 };
