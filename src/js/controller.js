@@ -73,6 +73,14 @@ const controlAddBookmark = function () {
 const controlBookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 };
+const restoreForm = function () {
+  setTimeout(function () {
+    addRecipeView.toggleWindow();
+  }, MODAL_CLOSE_SEC * 1000);
+  setTimeout(function () {
+    addRecipeView.generateMarkup();
+  }, (MODAL_CLOSE_SEC + 1) * 1000);
+};
 const controlAddRecipe = async function (newRecipe) {
   try {
     // Show loading spinner
@@ -88,11 +96,11 @@ const controlAddRecipe = async function (newRecipe) {
     // Change ID in URL
     window.history.pushState(null, '', `#${model.state.recipe.id}`);
     // Close form window
-    setTimeout(function () {
-      addRecipeView.toggleWindow();
-    }, MODAL_CLOSE_SEC * 1000);
+    restoreForm();
   } catch (err) {
     addRecipeView.renderError(err.message);
+    // Close form window
+    restoreForm();
   }
 };
 const init = function () {
