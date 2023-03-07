@@ -1,5 +1,4 @@
 import View from './View.js';
-import icons from '../../img/icons.svg';
 import previewView from './previewView.js';
 class ResultsView extends View {
   _parentElement = document.querySelector('.results');
